@@ -231,6 +231,13 @@ type dsTranslateOpts struct {
 	errorHandler ErrorHandler
 }
 
+type dsContourGenerateOpts struct {
+	config       []string
+	creation     []string
+	driver       DriverName
+	errorHandler ErrorHandler
+}
+
 // DatasetTranslateOption is an option that can be passed to Dataset.Translate()
 //
 // Available DatasetTranslateOptions are:

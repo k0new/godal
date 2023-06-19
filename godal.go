@@ -210,7 +210,7 @@ func (band Band) ClearNoData(opts ...SetNoDataOption) error {
 	return cgc.close()
 }
 
-//SetScaleOffset sets the band's scale and offset
+// SetScaleOffset sets the band's scale and offset
 func (band Band) SetScaleOffset(scale, offset float64, opts ...SetScaleOffsetOption) error {
 	setterOpts := &setScaleOffsetOpts{}
 	for _, opt := range opts {
@@ -891,7 +891,7 @@ func (ds *Dataset) SetNoData(nd float64, opts ...SetNoDataOption) error {
 	return cgc.close()
 }
 
-//SetScale sets the band's scale and offset
+// SetScale sets the band's scale and offset
 func (ds *Dataset) SetScaleOffset(scale, offset float64, opts ...SetScaleOffsetOption) error {
 	setterOpts := &setScaleOffsetOpts{}
 	for _, opt := range opts {
@@ -900,6 +900,18 @@ func (ds *Dataset) SetScaleOffset(scale, offset float64, opts ...SetScaleOffsetO
 	cgc := createCGOContext(nil, setterOpts.errorHandler)
 	C.godalSetDatasetScaleOffset(cgc.cPointer(), ds.handle(), C.double(scale), C.double(offset))
 	return cgc.close()
+}
+
+func (band Band) ContourGenerate(layer Layer, interval float64, idIdx, elevIdx int) error {
+	gopts := dsContourGenerateOpts{}
+
+	cgc := createCGOContext(gopts.config, gopts.errorHandler)
+
+	C.godalContourGenerate(cgc.cPointer(), band.handle(), C.double(interval), layer.handle(), C.int(idIdx), C.int(elevIdx))
+	if err := cgc.close(); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Translate runs the library version of gdal_translate.

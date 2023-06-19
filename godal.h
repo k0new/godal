@@ -74,7 +74,8 @@ extern "C" {
 	void godalGetGeoTransform(cctx *ctx, GDALDatasetH ds, double *gt);
 	void godalSetProjection(cctx *ctx, GDALDatasetH ds, char *wkt);
 
-	GDALDatasetH godalTranslate(cctx *ctx, char *dstName, GDALDatasetH ds, char **switches);
+    void godalContourGenerate(cctx *ctx, GDALRasterBandH hBand, double dfContourInterval, OGRLayerH layer, int idIdx, int elevIdx);
+    GDALDatasetH godalTranslate(cctx *ctx, char *dstName, GDALDatasetH ds, char **switches);
 	GDALDatasetH godalDatasetWarp(cctx *ctx, char *dstName, int nSrcCount, GDALDatasetH *srcDS, char **switches);
 	void godalDatasetWarpInto(cctx *ctx, GDALDatasetH dstDs,  int nSrcCount, GDALDatasetH *srcDS, char **switches);
 	GDALDatasetH godalDatasetVectorTranslate(cctx *ctx, char *dstName, GDALDatasetH ds, char **switches);
